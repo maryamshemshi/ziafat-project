@@ -13,8 +13,6 @@ class AccountController extends Controller
             ->latest()
             ->paginate(5);
 
-        $activeTab = request('tab', 'courses');
-
-        return view('layouts.account', compact('tickets', 'activeTab'));
+        return view('layouts.account', compact('tickets'));
     }
 }
