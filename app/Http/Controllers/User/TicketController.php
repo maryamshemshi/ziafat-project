@@ -20,19 +20,13 @@ class TicketController extends Controller
 
     public function store(StoreTicketRequest $request): RedirectResponse
     {
-        $ticketNumber = 'TKT-' . now()->format('ymd') . '-' . str_pad(Ticket::count() + 1, 5, '0', STR_PAD_LEFT);
+        $ticketData = $request->validated();
 
-        $ticket = auth()->user()->tickets()->create([
-            'ticket_number' => $ticketNumber,
-            'subject' => $request->subject,
-            'text' => $request->text,
-            'status' => TicketStatus::Pending,
-            'ip_address' => $request->ip(),
-        ]);
+        $ticket = auth()->user()->tickets()->create($ticketData);
 
         $ticket->messages()->create([
-            'user_id' => auth()->id(),
-            'message' => $request->text,
+            'user_id'    => auth()->id(),
+            'message'    => $ticketData['text'],
             'is_support' => false,
         ]);
 
