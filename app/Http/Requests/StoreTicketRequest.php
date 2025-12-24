@@ -12,7 +12,7 @@ class StoreTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return true;
     }
 
     /**
@@ -25,15 +25,6 @@ class StoreTicketRequest extends FormRequest
         return [
             'subject' => ['required', 'string', 'max:255'],
             'text'    => ['required', 'string', 'min:10'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'subject.required' => 'عنوان درخواست الزامی است.',
-            'text.required'    => 'شرح مشکل را لطفاً بنویسید.',
-            'text.min'         => 'شرح درخواست باید حداقل ۱۰ کاراکتر باشد.',
         ];
     }
 }
